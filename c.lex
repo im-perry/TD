@@ -14,7 +14,6 @@ void count();
 
 %%
 "/*"			{ comment(); }
-"*/"			{ comment(); }
 
 "else"			{ count(); return(ELSE); }
 "if"			{ count(); return(IF); }
@@ -30,7 +29,7 @@ void count();
 "="			{ count(); return(ASSIGN); }
 "+"			{ count(); return(ADD); }
 "-"			{ count(); return(SUBSTRACT); }
-";"			{ count(); return(END_OF_INSTRUCTION);}
+";"			{ count(); return(SEMICOLON);}
 "*"			{ count(); return(MULTIPLY); }
 "/"			{ count(); return(DIVIDE); }
 "<"			{ count(); return(LESS_THAN); }

@@ -12,7 +12,7 @@
 #define ADD 9
 #define SUBSTRACT 10
 #define IDENTIFIER 11
-#define END_OF_INSTRUCTION 12
+#define SEMICOLON 12
 #define ID 13
 #define NUM 14
 #define MULTIPLY 15
