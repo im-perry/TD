@@ -1,5 +1,5 @@
 D			[0-9]
-L			[a-zA-Z_]
+L			[a-zA-Z]
 H			[a-fA-F0-9]
 E			[Ee][+-]?{D}+
 FS			(f|F|l|L)
@@ -14,7 +14,6 @@ void count();
 
 %%
 "/*"			{ comment(); }
-"*/"			{ comment(); }
 
 "else"			{ count(); return(ELSE); }
 "if"			{ count(); return(IF); }
@@ -23,15 +22,32 @@ void count();
 "void"			{ count(); return(VOID); }
 "while"			{ count(); return(WHILE); }
 
-{L}({L}|{D})*		{ count(); return(ID); }
+{L}({L}|{D}|"_")*		{ count(); return(ID); }
 {D}{D}*             { count(); return(NUM); }
 
 
 "="			{ count(); return(ASSIGN); }
 "+"			{ count(); return(ADD); }
 "-"			{ count(); return(SUBSTRACT); }
-";"			{ count(); return(END_OF_INSTRUCTION);}
+";"			{ count(); return(SEMICOLON);}
+"*"			{ count(); return(MULTIPLY); }
+"/"			{ count(); return(DIVIDE); }
+"<"			{ count(); return(LESS_THAN); }
+"<="		{ count(); return(LESS_OR_EQUAL); }
+">"			{ count(); return(GREATER_THAN ); }
+">="		{ count(); return(GREATER_OR_EQUAL); }
+"=="		{ count(); return(EQUAL); }
+"!="		{ count(); return(NOT_EQUAL); }
+","			{ count(); return(COMMA); }
+"("			{ count(); return(LPAR); }
+")"			{ count(); return(RPAR); }
+"["			{ count(); return(SLPAR); }
+"]"			{ count(); return(SRPAR); }
+"{"			{ count(); return(CLPAR); }
+"}"			{ count(); return(CRPAR); }
 
+[ \t\v\n\f] {count(); }
+.			{ /* ignore bad characters */}
 %%
 
 yywrap()

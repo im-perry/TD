@@ -12,7 +12,22 @@
 #define ADD 9
 #define SUBSTRACT 10
 #define IDENTIFIER 11
-#define END_OF_INSTRUCTION 12
+#define SEMICOLON 12
 #define ID 13
 #define NUM 14
+#define MULTIPLY 15
+#define DIVIDE 16
+#define LESS_THAN 17
+#define LESS_OR_EQUAL 18
+#define GREATER_THAN 19
+#define GREATER_OR_EQUAL 20
+#define EQUAL 21
+#define NOT_EQUAL 22
+#define COMMA 23
+#define LPAR 24
+#define RPAR 25
+#define SLPAR 26
+#define SRPAR 27
+#define CLPAR 28
+#define CRPAR 29
 #endif
