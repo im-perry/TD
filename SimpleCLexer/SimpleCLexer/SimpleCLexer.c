@@ -43,7 +43,7 @@ const char* units[] = {
 int main()
 {
     int tokenValue = 0;
-    yyin = fopen("input.csrc", "rt");
+    yyin = fopen("code.csrc", "rt");
     if(yyin != NULL)
     {
         while ((tokenValue = yylex()) != END)
