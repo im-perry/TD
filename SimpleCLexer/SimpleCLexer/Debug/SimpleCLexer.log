@@ -1,4 +1,5 @@
-﻿  lex.yy.c
+﻿  c.tab.c
+  lex.yy.c
 c.lex(16,10): warning C4013: 'comment' undefined; assuming extern returning int
 lex.yy.c(1497,46): warning C4013: 'isatty' undefined; assuming extern returning int
   SimpleCLexer.c

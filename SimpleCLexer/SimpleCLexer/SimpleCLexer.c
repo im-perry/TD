@@ -6,7 +6,8 @@
 #include <errno.h>
 
 extern FILE* yyin;
-extern int yylex(void);
+//extern int yylex(void);
+extern int yyparse(void);
 
 const char* units[] = {
                         "END",
@@ -42,14 +43,27 @@ const char* units[] = {
 
 int main()
 {
-    int tokenValue = 0;
-    yyin = fopen("code.csrc", "rt");
+    //int tokenValue = 0;
+    yyin = fopen("input.csrc", "rt");
+
     if(yyin != NULL)
     {
-        while ((tokenValue = yylex()) != END)
+        int result = yyparse();
+        switch(result)
         {
-        printf(" => TOKEN ID: %d; Token Value: %s \n", tokenValue, units[tokenValue]);
+            case 0:
+                printf("Parse process sucessful.\n");
+                break;
+            case 1:
+                printf("The input is invalid.\n");
+                break;
+            case 2:
+                printf("Out of memory.\n");
+                break;
+            default:
+                break;
         }
+        fclose(yyin);
     }
     else 
     {

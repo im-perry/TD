@@ -1,5 +1,8 @@
 %{
 #include <stdio.h>
+
+void yyerror(char * s);
+extern int yylex(void);
 %}
 %token END
 %token INT
@@ -49,8 +52,8 @@ declaration
 	;
 
 var_declaration
-	: type_specifier ID END
-	| type_specifier ID SLPAR NUM SRPAR END
+	: type_specifier ID SEMICOLON
+	| type_specifier ID SLPAR NUM SRPAR SEMICOLON
 	;
 
 type_specifier
@@ -67,13 +70,13 @@ params
 	| VOID
 	;
 
-param_lst
-	: parama_list COMMA param
+param_list
+	: param_list COMMA param
 	| param
 	;
 
 param
-	: type_speicifer ID
+	: type_specifier ID
 	| type_specifier ID SLPAR SRPAR
 	;
 
@@ -82,7 +85,7 @@ compound_stmt
 	;
 
 local_declarations
-	: local_declaration var_declaration
+	: local_declarations var_declaration
 	|
 	;
 
@@ -100,8 +103,8 @@ statement
 	;
 
 expression_stmt
-	: expression END
-	| END
+	: expression SEMICOLON
+	| SEMICOLON
 	;
 
 selection_stmt
@@ -114,12 +117,12 @@ iteration_stmt
 	;
 
 return_stmt
-	: RETURN END
-	| RETRUN expression END
+	: RETURN SEMICOLON
+	| RETURN expression SEMICOLON
 	;
 
 expression
-	: var = expression
+	: var ASSIGN expression
 	| simple_expression
 	;
 
