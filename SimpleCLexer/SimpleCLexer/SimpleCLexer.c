@@ -8,6 +8,7 @@
 extern FILE* yyin;
 //extern int yylex(void);
 extern int yyparse(void);
+//extern int yydebug;
 
 const char* units[] = {
                         "END",
@@ -44,7 +45,8 @@ const char* units[] = {
 int main()
 {
     //int tokenValue = 0;
-    yyin = fopen("input.csrc", "rt");
+    //yydebug = 1;
+    yyin = fopen("code.csrc", "rt");
 
     if(yyin != NULL)
     {
@@ -52,13 +54,13 @@ int main()
         switch(result)
         {
             case 0:
-                printf("Parse process sucessful.\n");
+                printf("\nParse process sucessful.\n");
                 break;
             case 1:
-                printf("The input is invalid.\n");
+                printf("\nThe input is invalid.\n");
                 break;
             case 2:
-                printf("Out of memory.\n");
+                printf("\nOut of memory.\n");
                 break;
             default:
                 break;

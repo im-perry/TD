@@ -1,10 +1,9 @@
-int gcd_test ( int u, int v )
+int gcdtest ( int u, int v )
 {
 	if ( v == 0 )
 		return u ;
 	else
-		return gcd (v, u-u/v*v) ;
-		/* u-u/v*v == u mod v */
+		return gcd ( v, u-u/v*v );
 }
 void main(void)
 {
@@ -12,5 +11,5 @@ void main(void)
 	int y;
 	x = input();
 	y = input();
-	output(gcd_test(x,y));
+	output(gcdtest(x,y));
 }

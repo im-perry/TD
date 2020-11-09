@@ -52,8 +52,8 @@ declaration
 	;
 
 var_declaration
-	: type_specifier ID SEMICOLON
-	| type_specifier ID SLPAR NUM SRPAR SEMICOLON
+	: type_specifier ID END
+	| type_specifier ID SLPAR NUM SRPAR END
 	;
 
 type_specifier
@@ -62,7 +62,7 @@ type_specifier
 	;
 
 fun_declaration
-	: type_specifier ID LPAR params LPAR compound_stmt
+	: type_specifier ID LPAR params RPAR compound_stmt
 	;
 
 params
@@ -81,7 +81,7 @@ param
 	;
 
 compound_stmt
-	: CLPAR local_declarations statement_list CLPAR
+	: CLPAR local_declarations statement_list CRPAR
 	;
 
 local_declarations
@@ -103,8 +103,8 @@ statement
 	;
 
 expression_stmt
-	: expression SEMICOLON
-	| SEMICOLON
+	: expression END
+	| END
 	;
 
 selection_stmt
@@ -117,8 +117,8 @@ iteration_stmt
 	;
 
 return_stmt
-	: RETURN SEMICOLON
-	| RETURN expression SEMICOLON
+	: RETURN END
+	| RETURN expression END
 	;
 
 expression

@@ -22,14 +22,14 @@ void count();
 "void"			{ count(); return(VOID); }
 "while"			{ count(); return(WHILE); }
 
-{L}({L}|{D}|"_")*		{ count(); return(ID); }
-{D}{D}*             { count(); return(NUM); }
+({L})+([{L}|{D}|'_'])*		{ count(); return(ID); }
+({D})+({D})*				{ count(); return(NUM); }
 
 
 "="			{ count(); return(ASSIGN); }
 "+"			{ count(); return(ADD); }
 "-"			{ count(); return(SUBSTRACT); }
-";"			{ count(); return(SEMICOLON);}
+";"			{ count(); return(END);}
 "*"			{ count(); return(MULTIPLY); }
 "/"			{ count(); return(DIVIDE); }
 "<"			{ count(); return(LESS_THAN); }
