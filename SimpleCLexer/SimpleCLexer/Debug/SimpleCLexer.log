@@ -1,2 +1,8 @@
-﻿  SimpleCLexer.c
+﻿  c.tab.c
+  lex.yy.c
+c.lex(16,10): warning C4013: 'comment' undefined; assuming extern returning int
+lex.yy.c(1505,46): warning C4013: 'isatty' undefined; assuming extern returning int
+  SimpleCLexer.c
+  Generating Code...
+C:\Users\peris\Desktop\TD\SimpleCLexer\SimpleCLexer\c.lex(75): warning C4716: 'comment': must return a value
   SimpleCLexer.vcxproj -> C:\Users\peris\Desktop\TD\SimpleCLexer\Debug\SimpleCLexer.exe

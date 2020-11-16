@@ -8,7 +8,7 @@
 extern FILE* yyin;
 //extern int yylex(void);
 extern int yyparse(void);
-//extern int yydebug;
+extern int yydebug;
 
 const char* units[] = {
                         "END",
@@ -45,7 +45,7 @@ const char* units[] = {
 int main()
 {
     //int tokenValue = 0;
-    //yydebug = 1;
+    yydebug = 1;
     yyin = fopen("code.csrc", "rt");
 
     if(yyin != NULL)

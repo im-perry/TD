@@ -86,7 +86,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);YY_NO_UNISTD_H;CRT_SECURE_NO_WARNINGS;CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;; _CRT_SECURE_NO_WARNINGS; _CRT_NONSTDC_NO_DEPRECATE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);YY_NO_UNISTD_H;CRT_SECURE_NO_WARNINGS;CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;; _CRT_SECURE_NO_WARNINGS; _CRT_NONSTDC_NO_DEPRECATE;YYDEBUG;YYDEBUG;;YYDEBUG;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -100,7 +100,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);YY_NO_UNISTD_H;CRT_SECURE_NO_WARNINGS;CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;; _CRT_SECURE_NO_WARNINGS; _CRT_NONSTDC_NO_DEPRECATE</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);YY_NO_UNISTD_H;CRT_SECURE_NO_WARNINGS;CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;; _CRT_SECURE_NO_WARNINGS; _CRT_NONSTDC_NO_DEPRECATE;YYDEBUG;YYDEBUG;;YYDEBUG;</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
