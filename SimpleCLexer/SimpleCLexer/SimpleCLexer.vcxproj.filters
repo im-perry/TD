@@ -24,12 +24,18 @@
     <ClCompile Include="c.tab.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ast.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="symbols.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="c.tab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ast.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

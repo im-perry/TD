@@ -22,8 +22,8 @@ void count();
 "void"			{ count(); return(VOID); }
 "while"			{ count(); return(WHILE); }
 
-({L})+([{L}|{D}|'_'])*		{ count(); return(ID); }
-({D})+({D})*				{ count(); return(NUM); }
+({L})+([{L}|{D}|'_'])*		{ count(); yylval.strings = strdup(yytext); return(ID); }
+({D})+({D})*				{ count(); yylval.intVal = atoi(yytext); return(NUM); }
 
 
 "="			{ count(); return(ASSIGN); }
