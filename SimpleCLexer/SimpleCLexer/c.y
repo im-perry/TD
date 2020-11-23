@@ -176,12 +176,12 @@ simple_expression
 	;
 
 relop
-	: LESS_OR_EQUAL												{ $$ = createRelationalOperator("LESS_OR_EQUAL");}
-	| LESS_THAN													{ $$ = createRelationalOperator("LESS_THAN");}
-	| GREATER_THAN												{ $$ = createRelationalOperator("GREATER_THAN");}
-	| GREATER_OR_EQUAL											{ $$ = createRelationalOperator("GREATER_OR_EQUAL");}
-	| EQUAL														{ $$ = createRelationalOperator("EQUAL");}
-	| NOT_EQUAL													{ $$ = createRelationalOperator("NOT_EQUAL");}
+	: LESS_OR_EQUAL												{ $$ = createRelationalOperator($1);}
+	| LESS_THAN													{ $$ = createRelationalOperator($1);}
+	| GREATER_THAN												{ $$ = createRelationalOperator($1);}
+	| GREATER_OR_EQUAL											{ $$ = createRelationalOperator($1);}
+	| EQUAL														{ $$ = createRelationalOperator($1);}
+	| NOT_EQUAL													{ $$ = createRelationalOperator($1);}
 	;
 
 addtivie_expression
@@ -190,8 +190,8 @@ addtivie_expression
 	;
 
 addop
-	: ADD														{ $$ = createAddOperator("ADD");}
-	| SUBSTRACT													{ $$ = createAddOperator("SUBSTRACT");}
+	: ADD														{ $$ = createAddOperator($1);}
+	| SUBSTRACT													{ $$ = createAddOperator($1);}
 	;
 
 term
@@ -200,8 +200,8 @@ term
 	;
 
 mulop
-	: MULTIPLY													{ $$ = createMulOperator("MULTIPLY");}
-	| DIVIDE													{ $$ = createMulOperator("DIVIDE");}
+	: MULTIPLY													{ $$ = createMulOperator($1);}
+	| DIVIDE													{ $$ = createMulOperator($1);}
 	;
 
 factor
