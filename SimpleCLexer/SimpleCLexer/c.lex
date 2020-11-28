@@ -7,6 +7,7 @@ IS			(u|U|l|L)*
 
 %{
 #include <stdio.h>
+#include "ast.h"
 #include "c.tab.h"
 
 void count();

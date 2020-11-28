@@ -70,11 +70,13 @@
 #line 1 "c.y"
 
 #include <stdio.h>
+#include "ast.h"
 
 void yyerror(char * s);
 extern int yylex(void);
+Node* astRoot = NULL;
 
-#line 78 "c.tab.c"
+#line 80 "c.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -535,13 +537,13 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    41,    41,    45,    46,    50,    51,    55,    56,    60,
-      61,    65,    69,    70,    74,    75,    79,    80,    84,    88,
-      89,    93,    94,    98,    99,   100,   101,   102,   106,   107,
-     111,   112,   116,   120,   121,   125,   126,   130,   131,   135,
-     136,   140,   141,   142,   143,   144,   145,   149,   150,   154,
-     155,   159,   160,   164,   165,   169,   170,   171,   172,   176,
-     180,   181,   185,   186
+       0,    81,    81,    85,    86,    90,    91,    95,    96,   100,
+     101,   105,   109,   110,   114,   115,   119,   120,   124,   128,
+     130,   134,   136,   140,   141,   142,   143,   144,   148,   149,
+     153,   154,   158,   162,   163,   167,   168,   172,   173,   177,
+     178,   182,   183,   184,   185,   186,   187,   191,   192,   196,
+     197,   201,   202,   206,   207,   211,   212,   213,   214,   218,
+     222,   223,   227,   228
 };
 #endif
 
@@ -1187,8 +1189,382 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+  case 2: /* program: declaration_list  */
+#line 81 "c.y"
+                                                                                                                { (yyval.node) = createProgramNode((yyvsp[0].node), 0); astRoot = (yyval.node);}
+#line 1196 "c.tab.c"
+    break;
 
-#line 1192 "c.tab.c"
+  case 3: /* declaration_list: declaration_list declaration  */
+#line 85 "c.y"
+                                                                                                { (yyval.node) = createDeclarationNode((yyvsp[-1].node), (yyvsp[0].node));}
+#line 1202 "c.tab.c"
+    break;
+
+  case 4: /* declaration_list: declaration  */
+#line 86 "c.y"
+                                                                                                                { (yyval.node) = createDeclarationNode((yyvsp[0].node), 0);}
+#line 1208 "c.tab.c"
+    break;
+
+  case 5: /* declaration: var_declaration  */
+#line 90 "c.y"
+                                                                                                                { (yyval.node) = createDeclarationNode((yyvsp[0].node), 0);}
+#line 1214 "c.tab.c"
+    break;
+
+  case 6: /* declaration: fun_declaration  */
+#line 91 "c.y"
+                                                                                                                { (yyval.node) = createDeclarationNode((yyvsp[0].node), 0);}
+#line 1220 "c.tab.c"
+    break;
+
+  case 7: /* var_declaration: type_specifier ID END  */
+#line 95 "c.y"
+                                                                                                        { (yyval.node) = createVarDeclaration((yyvsp[-2].node), (yyvsp[-1].strings), 0);}
+#line 1226 "c.tab.c"
+    break;
+
+  case 8: /* var_declaration: type_specifier ID SLPAR NUM SRPAR END  */
+#line 96 "c.y"
+                                                                                        { (yyval.node) = createVarDeclaration((yyvsp[-5].node), (yyvsp[-4].strings), (yyvsp[-2].intVal));}
+#line 1232 "c.tab.c"
+    break;
+
+  case 9: /* type_specifier: INT  */
+#line 100 "c.y"
+                                                                                                                        { (yyval.node) = createTypeSpecifier("INT");}
+#line 1238 "c.tab.c"
+    break;
+
+  case 10: /* type_specifier: VOID  */
+#line 101 "c.y"
+                                                                                                                        { (yyval.node) = createTypeSpecifier("VOID");}
+#line 1244 "c.tab.c"
+    break;
+
+  case 11: /* fun_declaration: type_specifier ID LPAR params RPAR compound_stmt  */
+#line 105 "c.y"
+                                                                                { (yyval.node) = createFunctionDeclaration((yyvsp[-5].node), (yyvsp[-4].strings), (yyvsp[-2].node), (yyvsp[0].node));}
+#line 1250 "c.tab.c"
+    break;
+
+  case 12: /* params: param_list  */
+#line 109 "c.y"
+                                                                                                                { (yyval.node) = createParam((yyvsp[0].node));}
+#line 1256 "c.tab.c"
+    break;
+
+  case 13: /* params: VOID  */
+#line 110 "c.y"
+                                                                                                                        { (yyval.node) = createParam("VOID");}
+#line 1262 "c.tab.c"
+    break;
+
+  case 14: /* param_list: param_list COMMA param  */
+#line 114 "c.y"
+                                                                                                        { (yyval.node) = (yyvsp[-2].node); addLinkToList((yyval.node), (yyvsp[0].node));}
+#line 1268 "c.tab.c"
+    break;
+
+  case 15: /* param_list: param  */
+#line 115 "c.y"
+                                                                                                                        { (yyval.node) = createListNode("ParametersList", (yyvsp[0].node));}
+#line 1274 "c.tab.c"
+    break;
+
+  case 16: /* param: type_specifier ID  */
+#line 119 "c.y"
+                                                                                                                { (yyval.node) = createVarDeclaration((yyvsp[-1].node), (yyvsp[0].strings), 0);}
+#line 1280 "c.tab.c"
+    break;
+
+  case 17: /* param: type_specifier ID SLPAR SRPAR  */
+#line 120 "c.y"
+                                                                                                { (yyval.node) = createVarDeclaration((yyvsp[-3].node), (yyvsp[-2].strings), 0);}
+#line 1286 "c.tab.c"
+    break;
+
+  case 18: /* compound_stmt: CLPAR local_declarations statement_list CRPAR  */
+#line 124 "c.y"
+                                                                                { (yyval.node) = createCompoundStatement((yyvsp[-2].node), (yyvsp[-1].node));}
+#line 1292 "c.tab.c"
+    break;
+
+  case 19: /* local_declarations: local_declarations var_declaration  */
+#line 128 "c.y"
+                                                                                        { (yyval.node) = createListNode("LocalDeclarations", (yyvsp[-1].node)); 
+																	addLinkToList((yyval.node), (yyvsp[0].node));}
+#line 1299 "c.tab.c"
+    break;
+
+  case 20: /* local_declarations: %empty  */
+#line 130 "c.y"
+                                                                                                                                { (yyval.node) = NULL;}
+#line 1305 "c.tab.c"
+    break;
+
+  case 21: /* statement_list: statement_list statement  */
+#line 134 "c.y"
+                                                                                                        { (yyval.node) = createListNode("StatementList", (yyvsp[-1].node)); 
+																	addLinkToList((yyval.node), (yyvsp[0].node));}
+#line 1312 "c.tab.c"
+    break;
+
+  case 22: /* statement_list: %empty  */
+#line 136 "c.y"
+                                                                                                                                { (yyval.node) = NULL;}
+#line 1318 "c.tab.c"
+    break;
+
+  case 23: /* statement: expression_stmt  */
+#line 140 "c.y"
+                                                                                                                { (yyval.node) = createExpressionStatement(NULL);}
+#line 1324 "c.tab.c"
+    break;
+
+  case 24: /* statement: compound_stmt  */
+#line 141 "c.y"
+                                                                                                                { (yyval.node) = createCompoundStatement(NULL, NULL);}
+#line 1330 "c.tab.c"
+    break;
+
+  case 25: /* statement: selection_stmt  */
+#line 142 "c.y"
+                                                                                                                { (yyval.node) = createIfStatement(NULL, NULL, NULL);}
+#line 1336 "c.tab.c"
+    break;
+
+  case 26: /* statement: iteration_stmt  */
+#line 143 "c.y"
+                                                                                                                { (yyval.node) = createWhileStatement(NULL, NULL);}
+#line 1342 "c.tab.c"
+    break;
+
+  case 27: /* statement: return_stmt  */
+#line 144 "c.y"
+                                                                                                                { (yyval.node) = createReturnStatement(NULL);}
+#line 1348 "c.tab.c"
+    break;
+
+  case 28: /* expression_stmt: expression END  */
+#line 148 "c.y"
+                                                                                                                { (yyval.node) = createExpressionStatement((yyvsp[-1].node));}
+#line 1354 "c.tab.c"
+    break;
+
+  case 29: /* expression_stmt: END  */
+#line 149 "c.y"
+                                                                                                                        { (yyval.node) = createExpressionStatement(NULL);}
+#line 1360 "c.tab.c"
+    break;
+
+  case 30: /* selection_stmt: IF LPAR expression RPAR statement  */
+#line 153 "c.y"
+                                                                                                { (yyval.node) = createIfStatement((yyvsp[-2].node), (yyvsp[0].node), NULL);}
+#line 1366 "c.tab.c"
+    break;
+
+  case 31: /* selection_stmt: IF LPAR expression RPAR statement ELSE statement  */
+#line 154 "c.y"
+                                                                                { (yyval.node) = createIfStatement((yyvsp[-4].node), (yyvsp[-2].node), (yyvsp[0].node));}
+#line 1372 "c.tab.c"
+    break;
+
+  case 32: /* iteration_stmt: WHILE LPAR expression RPAR statement  */
+#line 158 "c.y"
+                                                                                        { (yyval.node) = createWhileStatement((yyvsp[-2].node), (yyvsp[0].node));}
+#line 1378 "c.tab.c"
+    break;
+
+  case 33: /* return_stmt: RETURN END  */
+#line 162 "c.y"
+                                                                                                                { (yyval.node) = createReturnStatement(NULL);}
+#line 1384 "c.tab.c"
+    break;
+
+  case 34: /* return_stmt: RETURN expression END  */
+#line 163 "c.y"
+                                                                                                        { (yyval.node) = createReturnStatement((yyvsp[-1].node));}
+#line 1390 "c.tab.c"
+    break;
+
+  case 35: /* expression: var ASSIGN expression  */
+#line 167 "c.y"
+                                                                                                        { (yyval.node) = createExpression((yyvsp[-2].node), (yyvsp[0].node));}
+#line 1396 "c.tab.c"
+    break;
+
+  case 36: /* expression: simple_expression  */
+#line 168 "c.y"
+                                                                                                                { (yyval.node) = createExpression(NULL, (yyvsp[0].node));}
+#line 1402 "c.tab.c"
+    break;
+
+  case 37: /* var: ID  */
+#line 172 "c.y"
+                                                                                                                        { (yyval.node) = createVar((yyvsp[0].strings), NULL);}
+#line 1408 "c.tab.c"
+    break;
+
+  case 38: /* var: ID SLPAR expression SRPAR  */
+#line 173 "c.y"
+                                                                                                        { (yyval.node) = createVar((yyvsp[-3].strings), (yyvsp[-1].node));}
+#line 1414 "c.tab.c"
+    break;
+
+  case 39: /* simple_expression: addtivie_expression relop addtivie_expression  */
+#line 177 "c.y"
+                                                                                { (yyval.node) = createSimpleExpression((yyvsp[-2].node), (yyvsp[0].node));}
+#line 1420 "c.tab.c"
+    break;
+
+  case 40: /* simple_expression: addtivie_expression  */
+#line 178 "c.y"
+                                                                                                        { (yyval.node) = createSimpleExpression((yyvsp[0].node), NULL);}
+#line 1426 "c.tab.c"
+    break;
+
+  case 41: /* relop: LESS_OR_EQUAL  */
+#line 182 "c.y"
+                                                                                                                { (yyval.node) = createRelationalOperator("LESS_OR_EQUAL");}
+#line 1432 "c.tab.c"
+    break;
+
+  case 42: /* relop: LESS_THAN  */
+#line 183 "c.y"
+                                                                                                                        { (yyval.node) = createRelationalOperator("LESS_THAN");}
+#line 1438 "c.tab.c"
+    break;
+
+  case 43: /* relop: GREATER_THAN  */
+#line 184 "c.y"
+                                                                                                                { (yyval.node) = createRelationalOperator("GREATER_THAN");}
+#line 1444 "c.tab.c"
+    break;
+
+  case 44: /* relop: GREATER_OR_EQUAL  */
+#line 185 "c.y"
+                                                                                                                { (yyval.node) = createRelationalOperator("GREATER_OR_EQUAL");}
+#line 1450 "c.tab.c"
+    break;
+
+  case 45: /* relop: EQUAL  */
+#line 186 "c.y"
+                                                                                                                        { (yyval.node) = createRelationalOperator("EQUAL");}
+#line 1456 "c.tab.c"
+    break;
+
+  case 46: /* relop: NOT_EQUAL  */
+#line 187 "c.y"
+                                                                                                                        { (yyval.node) = createRelationalOperator("NOT_EQUAL");}
+#line 1462 "c.tab.c"
+    break;
+
+  case 47: /* addtivie_expression: addtivie_expression addop term  */
+#line 191 "c.y"
+                                                                                                { (yyval.node) = createAdditiveExpression((yyvsp[-2].node), (yyvsp[0].node));}
+#line 1468 "c.tab.c"
+    break;
+
+  case 48: /* addtivie_expression: term  */
+#line 192 "c.y"
+                                                                                                                        { (yyval.node) = createAdditiveExpression((yyvsp[0].node), NULL);}
+#line 1474 "c.tab.c"
+    break;
+
+  case 49: /* addop: ADD  */
+#line 196 "c.y"
+                                                                                                                        { (yyval.node) = createAddOperator("ADD");}
+#line 1480 "c.tab.c"
+    break;
+
+  case 50: /* addop: SUBSTRACT  */
+#line 197 "c.y"
+                                                                                                                        { (yyval.node) = createAddOperator("SUBSTRACT");}
+#line 1486 "c.tab.c"
+    break;
+
+  case 51: /* term: term mulop factor  */
+#line 201 "c.y"
+                                                                                                                { (yyval.node) = createMultiplier((yyvsp[-2].node), (yyvsp[0].node));}
+#line 1492 "c.tab.c"
+    break;
+
+  case 52: /* term: factor  */
+#line 202 "c.y"
+                                                                                                                        { (yyval.node) = createMultiplier((yyvsp[0].node), NULL);}
+#line 1498 "c.tab.c"
+    break;
+
+  case 53: /* mulop: MULTIPLY  */
+#line 206 "c.y"
+                                                                                                                        { (yyval.node) = createMulOperator("MULTIPLY");}
+#line 1504 "c.tab.c"
+    break;
+
+  case 54: /* mulop: DIVIDE  */
+#line 207 "c.y"
+                                                                                                                        { (yyval.node) = createMulOperator("DIVIDE");}
+#line 1510 "c.tab.c"
+    break;
+
+  case 55: /* factor: LPAR expression RPAR  */
+#line 211 "c.y"
+                                                                                                        { (yyval.node) = createFactor((yyvsp[-1].node));}
+#line 1516 "c.tab.c"
+    break;
+
+  case 56: /* factor: var  */
+#line 212 "c.y"
+                                                                                                                        { (yyval.node) = createFactor((yyvsp[0].node));}
+#line 1522 "c.tab.c"
+    break;
+
+  case 57: /* factor: call  */
+#line 213 "c.y"
+                                                                                                                        { (yyval.node) = createFactor((yyvsp[0].node));}
+#line 1528 "c.tab.c"
+    break;
+
+  case 58: /* factor: NUM  */
+#line 214 "c.y"
+                                                                                                                        { (yyval.node) = createFactor((yyvsp[0].intVal));}
+#line 1534 "c.tab.c"
+    break;
+
+  case 59: /* call: ID LPAR args RPAR  */
+#line 218 "c.y"
+                                                                                                                { (yyval.node) = createCall((yyvsp[-3].strings), (yyvsp[-1].node));}
+#line 1540 "c.tab.c"
+    break;
+
+  case 60: /* args: arg_list  */
+#line 222 "c.y"
+                                                                                                                        { (yyval.node) = createArgs((yyvsp[0].node));}
+#line 1546 "c.tab.c"
+    break;
+
+  case 61: /* args: %empty  */
+#line 223 "c.y"
+                                                                                                                                { (yyval.node) = NULL;}
+#line 1552 "c.tab.c"
+    break;
+
+  case 62: /* arg_list: arg_list COMMA expression  */
+#line 227 "c.y"
+                                                                                                        { (yyval.node) = (yyvsp[-2].node); addLinkToList((yyval.node), (yyvsp[0].node));}
+#line 1558 "c.tab.c"
+    break;
+
+  case 63: /* arg_list: expression  */
+#line 228 "c.y"
+                                                                                                                { (yyval.node) = createListNode("ArgumentsList", (yyvsp[0].node));}
+#line 1564 "c.tab.c"
+    break;
+
+
+#line 1568 "c.tab.c"
 
       default: break;
     }
@@ -1382,7 +1758,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 189 "c.y"
+#line 231 "c.y"
 
 
 void yyerror(char * s)

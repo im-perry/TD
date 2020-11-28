@@ -4,6 +4,7 @@
 
 void yyerror(char * s);
 extern int yylex(void);
+Node* astRoot = NULL;
 %}
 
 %union{
@@ -91,8 +92,8 @@ declaration
 	;
 
 var_declaration
-	: type_specifier ID END										{ $$ = createVarDelcaration($1, $2, 0);}
-	| type_specifier ID SLPAR NUM SRPAR END						{ $$ = createVarDelcaration($1, $2, $4);}
+	: type_specifier ID END										{ $$ = createVarDeclaration($1, $2, 0);}
+	| type_specifier ID SLPAR NUM SRPAR END						{ $$ = createVarDeclaration($1, $2, $4);}
 	;
 
 type_specifier
@@ -106,7 +107,7 @@ fun_declaration
 
 params
 	: param_list												{ $$ = createParam($1);}
-	| VOID														{ $$ = createParam($1);}
+	| VOID														{ $$ = createParam("VOID");}
 	;
 
 param_list
@@ -116,7 +117,7 @@ param_list
 
 param
 	: type_specifier ID											{ $$ = createVarDeclaration($1, $2, 0);}
-	| type_specifier ID SLPAR SRPAR								{ $$ = createVarDeclaration($1. $2, 0);}
+	| type_specifier ID SLPAR SRPAR								{ $$ = createVarDeclaration($1, $2, 0);}
 	;
 
 compound_stmt
@@ -124,13 +125,15 @@ compound_stmt
 	;
 
 local_declarations
-	: local_declarations var_declaration						{ $$ = createListNode("LocalDeclarations", $1); addLinkToList($$, $2);}
-	|
+	: local_declarations var_declaration						{ $$ = createListNode("LocalDeclarations", $1); 
+																	addLinkToList($$, $2);}
+	|															{ $$ = NULL;}
 	;
 
 statement_list
-	: statement_list statement									{ $$ = createListNode("StatementList", $1); addLinkToList($$, $2);}
-	|
+	: statement_list statement									{ $$ = createListNode("StatementList", $1); 
+																	addLinkToList($$, $2);}
+	|															{ $$ = NULL;}
 	;
 
 statement
@@ -148,7 +151,7 @@ expression_stmt
 
 selection_stmt
 	: IF LPAR expression RPAR statement							{ $$ = createIfStatement($3, $5, NULL);}
-	| IF LPAR expression RPAR statement ELSE statement			{ $$ = createIfStatement($3, $5, %7);}
+	| IF LPAR expression RPAR statement ELSE statement			{ $$ = createIfStatement($3, $5, $7);}
 	;
 
 iteration_stmt
@@ -162,7 +165,7 @@ return_stmt
 
 expression
 	: var ASSIGN expression										{ $$ = createExpression($1, $3);}
-	| simple_expression											{ $$ = createExpression($1, NULL);}
+	| simple_expression											{ $$ = createExpression(NULL, $1);}
 	;
 
 var
@@ -176,12 +179,12 @@ simple_expression
 	;
 
 relop
-	: LESS_OR_EQUAL												{ $$ = createRelationalOperator($1);}
-	| LESS_THAN													{ $$ = createRelationalOperator($1);}
-	| GREATER_THAN												{ $$ = createRelationalOperator($1);}
-	| GREATER_OR_EQUAL											{ $$ = createRelationalOperator($1);}
-	| EQUAL														{ $$ = createRelationalOperator($1);}
-	| NOT_EQUAL													{ $$ = createRelationalOperator($1);}
+	: LESS_OR_EQUAL												{ $$ = createRelationalOperator("LESS_OR_EQUAL");}
+	| LESS_THAN													{ $$ = createRelationalOperator("LESS_THAN");}
+	| GREATER_THAN												{ $$ = createRelationalOperator("GREATER_THAN");}
+	| GREATER_OR_EQUAL											{ $$ = createRelationalOperator("GREATER_OR_EQUAL");}
+	| EQUAL														{ $$ = createRelationalOperator("EQUAL");}
+	| NOT_EQUAL													{ $$ = createRelationalOperator("NOT_EQUAL");}
 	;
 
 addtivie_expression
@@ -190,8 +193,8 @@ addtivie_expression
 	;
 
 addop
-	: ADD														{ $$ = createAddOperator($1);}
-	| SUBSTRACT													{ $$ = createAddOperator($1);}
+	: ADD														{ $$ = createAddOperator("ADD");}
+	| SUBSTRACT													{ $$ = createAddOperator("SUBSTRACT");}
 	;
 
 term
@@ -200,8 +203,8 @@ term
 	;
 
 mulop
-	: MULTIPLY													{ $$ = createMulOperator($1);}
-	| DIVIDE													{ $$ = createMulOperator($1);}
+	: MULTIPLY													{ $$ = createMulOperator("MULTIPLY");}
+	| DIVIDE													{ $$ = createMulOperator("DIVIDE");}
 	;
 
 factor
@@ -217,7 +220,7 @@ call
 
 args
 	: arg_list													{ $$ = createArgs($1);}
-	|
+	|															{ $$ = NULL;}
 	;
 
 arg_list

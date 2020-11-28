@@ -1,8 +1,26 @@
-﻿  c.tab.c
+﻿c.y : warning : 1 shift/reduce conflict [-Wconflicts-sr]
+  c.y: note: rerun with option '-Wcounterexamples' to generate conflict counterexamples
+  ast.c
+C:\Users\peris\Desktop\TD\SimpleCLexer\SimpleCLexer\ast.c(329,33): warning C4090: '=': different 'const' qualifiers
+C:\Users\peris\Desktop\TD\SimpleCLexer\SimpleCLexer\ast.c(331,32): warning C4477: 'sprintf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'Node *'
+  c.tab.c
+c.y(81,165): warning C4020: 'createProgramNode': too many actual parameters
+c.y(85,163): warning C4020: 'createDeclarationNode': too many actual parameters
+c.y(86,169): warning C4020: 'createDeclarationNode': too many actual parameters
+c.y(90,169): warning C4020: 'createDeclarationNode': too many actual parameters
+c.y(91,169): warning C4020: 'createDeclarationNode': too many actual parameters
+c.y(105,123): warning C4013: 'createFunctionDeclaration' undefined; assuming extern returning int
+c.y(105,197): warning C4047: '=': 'Node *' differs in levels of indirection from 'int'
+c.y(110,156): warning C4133: 'function': incompatible types - from 'char [5]' to 'Node *'
+c.y(214,168): warning C4047: 'function': 'Node *' differs in levels of indirection from 'int'
+c.y(214,160): warning C4024: 'createFactor': different types for formal and actual parameter 1
+c.y(218,140): warning C4013: 'createCall' undefined; assuming extern returning int
+c.y(218,179): warning C4047: '=': 'Node *' differs in levels of indirection from 'int'
+c.y(222,148): warning C4013: 'createArgs' undefined; assuming extern returning int
+c.y(222,165): warning C4047: '=': 'Node *' differs in levels of indirection from 'int'
   lex.yy.c
-c.lex(16,10): warning C4013: 'comment' undefined; assuming extern returning int
-lex.yy.c(1505,46): warning C4013: 'isatty' undefined; assuming extern returning int
-  SimpleCLexer.c
+c.lex(17,10): warning C4013: 'comment' undefined; assuming extern returning int
+lex.yy.c(1506,46): warning C4013: 'isatty' undefined; assuming extern returning int
   Generating Code...
-C:\Users\peris\Desktop\TD\SimpleCLexer\SimpleCLexer\c.lex(75): warning C4716: 'comment': must return a value
+C:\Users\peris\Desktop\TD\SimpleCLexer\SimpleCLexer\c.lex(76): warning C4716: 'comment': must return a value
   SimpleCLexer.vcxproj -> C:\Users\peris\Desktop\TD\SimpleCLexer\Debug\SimpleCLexer.exe
