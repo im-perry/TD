@@ -42,6 +42,12 @@ Node* createListNode(const char* listName, Node* firstLink)
 	retNode->links[0] = firstLink;
 	return retNode;
 }
+ 
+Node* createEmptyList(const char* listName)
+{
+	Node* retNode = createDefaultNode(listName, 0);
+	return retNode;
+}
 
 void addLinkToList(Node* listNode, Node* linkToAdd)
 {
@@ -143,13 +149,15 @@ Node* createFunctionDeclaration(Node* typeSpecifier, const char* functionName, N
 	return retNode;
 }
 
-Node* createParam(Node* param) 
+Node* createParam(Node* param, const char* type) 
 {
 	Node* retNode = createDefaultNode("ParametersList", 1);
 
 	if(retNode)
 	{
 		retNode->links[0] = param;
+		if (type)
+			strcpy(retNode->extraData, type);
 	}
 
 	return retNode;
@@ -246,14 +254,15 @@ Node* createVar(const char* varName, Node* expression)
 	return retNode;
 }
 
-Node* createSimpleExpression(Node* firstAdditive, Node* secondAdditive)
+Node* createSimpleExpression(Node* firstAdditive, Node* relOp, Node* secondAdditive)
 {
 	Node* retNode = createDefaultNode("SimpleExpression", 2);
 
 	if (retNode)
 	{
 		retNode->links[0] = firstAdditive;
-		retNode->links[1] = secondAdditive;
+		retNode->links[1] = relOp;
+		retNode->links[2] = secondAdditive;
 	}
 
 	return retNode;
@@ -263,18 +272,19 @@ Node* createRelationalOperator(const char* relationalOperator)
 {
 	Node* retVal = createDefaultNode("RelationalOperator", 0);
 	if (relationalOperator)
-		sprintf(retVal->extraData, "%s", relationalOperator);
+		strcpy(retVal->extraData, relationalOperator);
 	return retVal;
 }
 
-Node* createAdditiveExpression(Node* additive, Node* term)
+Node* createAdditiveExpression(Node* additive, Node* addOp, Node* term)
 {
 	Node* retNode = createDefaultNode("AdditiveExpression", 2);
 
 	if (retNode)
 	{
 		retNode->links[0] = additive;
-		retNode->links[1] = term;
+		retNode->links[1] = addOp;
+		retNode->links[2] = term;
 	}
 
 	return retNode;
@@ -284,18 +294,19 @@ Node* createAddOperator(const char* additiveOperator)
 {
 	Node* retVal = createDefaultNode("AddOperator", 0);
 	if (additiveOperator)
-		sprintf(retVal->extraData, "%s", additiveOperator);
+		strcpy(retVal->extraData, additiveOperator);
 	return retVal;
 }
 
-Node* createMultiplier(Node* term, Node* factor)
+Node* createMultiplier(Node* term, Node* mulOp, Node* factor)
 {
 	Node* retNode = createDefaultNode("Multiplier", 2);
 
 	if (retNode)
 	{
 		retNode->links[0] = term;
-		retNode->links[1] = factor;
+		retNode->links[1] = mulOp;
+		retNode->links[2] = factor;
 	}
 
 	return retNode;
@@ -305,7 +316,7 @@ Node* createMulOperator(const char* multiplyOperator)
 {
 	Node* retVal = createDefaultNode("MulOperator", 0);
 	if (multiplyOperator)
-		sprintf(retVal->extraData, "%s", multiplyOperator);
+		strcpy(retVal->extraData, multiplyOperator);
 	return retVal;
 }
 
@@ -328,7 +339,7 @@ Node* createCall(const char* identifier, Node* args)
 	{
 		retNode->links[0] = identifier;
 		if (args)
-			sprintf(retNode->extraData, "%s", args);
+			strcpy(retNode->extraData, args);
 	}
 
 	return retNode;

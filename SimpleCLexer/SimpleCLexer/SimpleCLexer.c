@@ -2,15 +2,17 @@
 //
 
 #include <stdio.h>
-#include "symbols.h"
+#include "ast.h"
+//#include "symbols.h"
 #include <errno.h>
 
 extern FILE* yyin;
 //extern int yylex(void);
 extern int yyparse(void);
 extern int yydebug;
+extern Node* astRoot;
 
-const char* units[] = {
+/*const char* units[] = {
                         "END",
                         "INT",
                         "VOID",
@@ -40,12 +42,12 @@ const char* units[] = {
                         "SLPAR",
                         "SRPAR",
                         "CLPAR",
-                        "CRPAR"};
+                        "CRPAR"};*/
 
 int main()
 {
     //int tokenValue = 0;
-    yydebug = 1;
+    //yydebug = 1;
     yyin = fopen("code.csrc", "rt");
 
     if(yyin != NULL)
@@ -54,17 +56,18 @@ int main()
         switch(result)
         {
             case 0:
-                printf("\nParse process sucessful.\n");
+                printf("\nParse process sucessful.\n\n");
                 break;
             case 1:
-                printf("\nThe input is invalid.\n");
+                printf("\n\nThe input is invalid.\n\n");
                 break;
             case 2:
-                printf("\nOut of memory.\n");
+                printf("\n\nOut of memory.\n\n");
                 break;
             default:
                 break;
         }
+        printAst(astRoot, 0);
         fclose(yyin);
     }
     else 

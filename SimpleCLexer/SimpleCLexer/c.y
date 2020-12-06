@@ -78,12 +78,12 @@ Node* astRoot = NULL;
 %start program
 %%
 program
-	: declaration_list											{ $$ = createProgramNode($1, 0); astRoot = $$;}
+	: declaration_list											{ $$ = createProgramNode($1); astRoot = $$;}
 	;
 
 declaration_list
-	: declaration_list declaration								{ $$ = createDeclarationNode($1, $2);}
-	| declaration												{ $$ = createDeclarationNode($1, 0);}
+	: declaration_list declaration								{ $$ = $1; addLinkToList($$, $2);}
+	| declaration												{ $$ = createListNode("DeclarationList", $1);}
 	;
 
 declaration
@@ -106,8 +106,8 @@ fun_declaration
 	;
 
 params
-	: param_list												{ $$ = createParam($1);}
-	| VOID														{ $$ = createParam("VOID");}
+	: param_list												{ $$ = createParam($1, 0);}
+	| VOID														{ $$ = createParam(0, "VOID");}
 	;
 
 param_list
@@ -125,15 +125,13 @@ compound_stmt
 	;
 
 local_declarations
-	: local_declarations var_declaration						{ $$ = createListNode("LocalDeclarations", $1); 
-																	addLinkToList($$, $2);}
-	|															{ $$ = NULL;}
+	: local_declarations var_declaration						{ $$ = $1; addLinkToList($$, $2);}
+	|															{ $$ = createEmptyList("LocalDeclarations");}
 	;
 
 statement_list
-	: statement_list statement									{ $$ = createListNode("StatementList", $1); 
-																	addLinkToList($$, $2);}
-	|															{ $$ = NULL;}
+	: statement_list statement									{ $$ = $1; addLinkToList($$, $2);}
+	|															{ $$ = createEmptyList("StatementList");}
 	;
 
 statement
@@ -174,8 +172,8 @@ var
 	;
 
 simple_expression
-	: addtivie_expression relop addtivie_expression				{ $$ = createSimpleExpression($1, $3);}
-	| addtivie_expression										{ $$ = createSimpleExpression($1, NULL);}
+	: addtivie_expression relop addtivie_expression				{ $$ = createSimpleExpression($1, $2, $3);}
+	| addtivie_expression										{ $$ = createSimpleExpression($1, NULL, NULL);}
 	;
 
 relop
@@ -188,8 +186,8 @@ relop
 	;
 
 addtivie_expression
-	: addtivie_expression addop term							{ $$ = createAdditiveExpression($1, $3);}
-	| term														{ $$ = createAdditiveExpression($1, NULL);}
+	: addtivie_expression addop term							{ $$ = createAdditiveExpression($1, $2, $3);}
+	| term														{ $$ = createAdditiveExpression($1, NULL, NULL);}
 	;
 
 addop
@@ -198,8 +196,8 @@ addop
 	;
 
 term
-	: term mulop factor											{ $$ = createMultiplier($1, $3);}
-	| factor													{ $$ = createMultiplier($1, NULL);}
+	: term mulop factor											{ $$ = createMultiplier($1, $2, $3);}
+	| factor													{ $$ = createMultiplier($1, NULL, NULL);}
 	;
 
 mulop

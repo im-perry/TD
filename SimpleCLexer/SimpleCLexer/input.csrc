@@ -1,7 +1,8 @@
-int x = 20;
-while
-if (n == 0){
+int abcd(void){
+	int ab;
+	int ac;
+	ac = 5;
+	return ab;
+	if( jhhjsd){}
+
 }
-else{
-}
-void
