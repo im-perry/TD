@@ -22,15 +22,16 @@ Node* createExpressionStatement(Node* expression);
 Node* createIfStatement(Node* expression, Node* firstStmt, Node* secondStmt);
 Node* createWhileStatement(Node* expression, Node* statement);
 Node* createReturnStatement(Node* expression);
-Node* createExpression(Node* variable, Node* expression);
+Node* createExpression(Node* variable, const char* assign, Node* expression);
 Node* createVar(const char* varName, Node* expression);
 Node* createSimpleExpression(Node* firstAdditive, Node* relOp, Node* secondAdditive);
 Node* createRelationalOperator(const char* relationalOperator);
 Node* createAdditiveExpression(Node* additive, Node* addOp, Node* term);
 Node* createAddOperator(const char* additiveOperator);
-Node* createMultiplier(Node* term, Node* mulOp, Node* factor);
+Node* createTerm(Node* term, Node* mulOp, Node* factor);
 Node* createMulOperator(const char* multiplyOperator);
 Node* createFactor(Node* factor);
+Node* createStatement(Node* statement);
 
 
 Node* createDefaultNode(const char* nodeName, unsigned int linksCount);

@@ -1,6 +1,6 @@
 ﻿c.y : warning : 1 shift/reduce conflict [-Wconflicts-sr]
   c.y: note: rerun with option '-Wcounterexamples' to generate conflict counterexamples
-  SimpleCLexer.c
+  ast.c
   c.tab.c
 c.y(90,169): warning C4020: 'createDeclarationNode': too many actual parameters
 c.y(91,169): warning C4020: 'createDeclarationNode': too many actual parameters
@@ -16,6 +16,7 @@ c.y(220,165): warning C4047: '=': 'Node *' differs in levels of indirection from
   lex.yy.c
 c.lex(17,10): warning C4013: 'comment' undefined; assuming extern returning int
 lex.yy.c(1506,46): warning C4013: 'isatty' undefined; assuming extern returning int
+  SimpleCLexer.c
   Generating Code...
 C:\Users\peris\Desktop\TD\SimpleCLexer\SimpleCLexer\c.lex(76): warning C4716: 'comment': must return a value
   SimpleCLexer.vcxproj -> C:\Users\peris\Desktop\TD\SimpleCLexer\Debug\SimpleCLexer.exe

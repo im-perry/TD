@@ -66,7 +66,7 @@ Node* astRoot = NULL;
 %type <node> var
 %type <node> simple_expression
 %type <node> relop
-%type <node> addtivie_expression
+%type <node> additive_expression
 %type <node> addop
 %type <node> term
 %type <node> mulop
@@ -135,11 +135,11 @@ statement_list
 	;
 
 statement
-	: expression_stmt											{ $$ = createExpressionStatement(NULL);}
-	| compound_stmt												{ $$ = createCompoundStatement(NULL, NULL);}
-	| selection_stmt											{ $$ = createIfStatement(NULL, NULL, NULL);}			
-	| iteration_stmt											{ $$ = createWhileStatement(NULL, NULL);}
-	| return_stmt												{ $$ = createReturnStatement(NULL);}
+	: expression_stmt											{ $$ = createStatement($1);}
+	| compound_stmt												{ $$ = createStatement($1);}
+	| selection_stmt											{ $$ = createStatement($1);}			
+	| iteration_stmt											{ $$ = createStatement($1);}
+	| return_stmt												{ $$ = createStatement($1);}
 	;
 
 expression_stmt
@@ -162,8 +162,8 @@ return_stmt
 	;
 
 expression
-	: var ASSIGN expression										{ $$ = createExpression($1, $3);}
-	| simple_expression											{ $$ = createExpression(NULL, $1);}
+	: var ASSIGN expression										{ $$ = createExpression($1, "ASSIGN", $3);}
+	| simple_expression											{ $$ = createExpression(NULL, NULL, $1);}
 	;
 
 var
@@ -172,8 +172,8 @@ var
 	;
 
 simple_expression
-	: addtivie_expression relop addtivie_expression				{ $$ = createSimpleExpression($1, $2, $3);}
-	| addtivie_expression										{ $$ = createSimpleExpression($1, NULL, NULL);}
+	: additive_expression relop additive_expression				{ $$ = createSimpleExpression($1, $2, $3);}
+	| additive_expression										{ $$ = createSimpleExpression($1, NULL, NULL);}
 	;
 
 relop
@@ -185,24 +185,24 @@ relop
 	| NOT_EQUAL													{ $$ = createRelationalOperator("NOT_EQUAL");}
 	;
 
-addtivie_expression
-	: addtivie_expression addop term							{ $$ = createAdditiveExpression($1, $2, $3);}
-	| term														{ $$ = createAdditiveExpression($1, NULL, NULL);}
+additive_expression
+	: additive_expression addop term							{ $$ = $1; addLinkToList($$, $2); addLinkToList($$, $3);}
+	| term														{ $$ = createListNode("AdditiveExpression", $1);}
 	;
 
 addop
 	: ADD														{ $$ = createAddOperator("ADD");}
-	| SUBSTRACT													{ $$ = createAddOperator("SUBSTRACT");}
+	| SUBSTRACT													{ $$ = createAddOperator("SUB");}
 	;
 
 term
-	: term mulop factor											{ $$ = createMultiplier($1, $2, $3);}
-	| factor													{ $$ = createMultiplier($1, NULL, NULL);}
+	: term mulop factor											{ $$ = $3; addLinkToList($$, $2); addLinkToList($$, $1);}
+	| factor													{ $$ = createListNode("Term", $1);}
 	;
 
 mulop
-	: MULTIPLY													{ $$ = createMulOperator("MULTIPLY");}
-	| DIVIDE													{ $$ = createMulOperator("DIVIDE");}
+	: MULTIPLY													{ $$ = createMulOperator("MULT");}
+	| DIVIDE													{ $$ = createMulOperator("DIV");}
 	;
 
 factor

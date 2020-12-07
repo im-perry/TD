@@ -159,7 +159,7 @@ enum yysymbol_kind_t
   YYSYMBOL_var = 52,                       /* var  */
   YYSYMBOL_simple_expression = 53,         /* simple_expression  */
   YYSYMBOL_relop = 54,                     /* relop  */
-  YYSYMBOL_addtivie_expression = 55,       /* addtivie_expression  */
+  YYSYMBOL_additive_expression = 55,       /* additive_expression  */
   YYSYMBOL_addop = 56,                     /* addop  */
   YYSYMBOL_term = 57,                      /* term  */
   YYSYMBOL_mulop = 58,                     /* mulop  */
@@ -569,7 +569,7 @@ static const char *const yytname[] =
   "fun_declaration", "params", "param_list", "param", "compound_stmt",
   "local_declarations", "statement_list", "statement", "expression_stmt",
   "selection_stmt", "iteration_stmt", "return_stmt", "expression", "var",
-  "simple_expression", "relop", "addtivie_expression", "addop", "term",
+  "simple_expression", "relop", "additive_expression", "addop", "term",
   "mulop", "factor", "call", "args", "arg_list", YY_NULLPTR
 };
 
@@ -1317,31 +1317,31 @@ yyreduce:
 
   case 23: /* statement: expression_stmt  */
 #line 138 "c.y"
-                                                                                                                { (yyval.node) = createExpressionStatement(NULL);}
+                                                                                                                { (yyval.node) = createStatement((yyvsp[0].node));}
 #line 1322 "c.tab.c"
     break;
 
   case 24: /* statement: compound_stmt  */
 #line 139 "c.y"
-                                                                                                                { (yyval.node) = createCompoundStatement(NULL, NULL);}
+                                                                                                                { (yyval.node) = createStatement((yyvsp[0].node));}
 #line 1328 "c.tab.c"
     break;
 
   case 25: /* statement: selection_stmt  */
 #line 140 "c.y"
-                                                                                                                { (yyval.node) = createIfStatement(NULL, NULL, NULL);}
+                                                                                                                { (yyval.node) = createStatement((yyvsp[0].node));}
 #line 1334 "c.tab.c"
     break;
 
   case 26: /* statement: iteration_stmt  */
 #line 141 "c.y"
-                                                                                                                { (yyval.node) = createWhileStatement(NULL, NULL);}
+                                                                                                                { (yyval.node) = createStatement((yyvsp[0].node));}
 #line 1340 "c.tab.c"
     break;
 
   case 27: /* statement: return_stmt  */
 #line 142 "c.y"
-                                                                                                                { (yyval.node) = createReturnStatement(NULL);}
+                                                                                                                { (yyval.node) = createStatement((yyvsp[0].node));}
 #line 1346 "c.tab.c"
     break;
 
@@ -1389,13 +1389,13 @@ yyreduce:
 
   case 35: /* expression: var ASSIGN expression  */
 #line 165 "c.y"
-                                                                                                        { (yyval.node) = createExpression((yyvsp[-2].node), (yyvsp[0].node));}
+                                                                                                        { (yyval.node) = createExpression((yyvsp[-2].node), "ASSIGN", (yyvsp[0].node));}
 #line 1394 "c.tab.c"
     break;
 
   case 36: /* expression: simple_expression  */
 #line 166 "c.y"
-                                                                                                                { (yyval.node) = createExpression(NULL, (yyvsp[0].node));}
+                                                                                                                { (yyval.node) = createExpression(NULL, NULL, (yyvsp[0].node));}
 #line 1400 "c.tab.c"
     break;
 
@@ -1411,13 +1411,13 @@ yyreduce:
 #line 1412 "c.tab.c"
     break;
 
-  case 39: /* simple_expression: addtivie_expression relop addtivie_expression  */
+  case 39: /* simple_expression: additive_expression relop additive_expression  */
 #line 175 "c.y"
                                                                                 { (yyval.node) = createSimpleExpression((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node));}
 #line 1418 "c.tab.c"
     break;
 
-  case 40: /* simple_expression: addtivie_expression  */
+  case 40: /* simple_expression: additive_expression  */
 #line 176 "c.y"
                                                                                                         { (yyval.node) = createSimpleExpression((yyvsp[0].node), NULL, NULL);}
 #line 1424 "c.tab.c"
@@ -1459,15 +1459,15 @@ yyreduce:
 #line 1460 "c.tab.c"
     break;
 
-  case 47: /* addtivie_expression: addtivie_expression addop term  */
+  case 47: /* additive_expression: additive_expression addop term  */
 #line 189 "c.y"
-                                                                                                { (yyval.node) = createAdditiveExpression((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node));}
+                                                                                                { (yyval.node) = (yyvsp[-2].node); addLinkToList((yyval.node), (yyvsp[-1].node)); addLinkToList((yyval.node), (yyvsp[0].node));}
 #line 1466 "c.tab.c"
     break;
 
-  case 48: /* addtivie_expression: term  */
+  case 48: /* additive_expression: term  */
 #line 190 "c.y"
-                                                                                                                        { (yyval.node) = createAdditiveExpression((yyvsp[0].node), NULL, NULL);}
+                                                                                                                        { (yyval.node) = createListNode("AdditiveExpression", (yyvsp[0].node));}
 #line 1472 "c.tab.c"
     break;
 
@@ -1479,31 +1479,31 @@ yyreduce:
 
   case 50: /* addop: SUBSTRACT  */
 #line 195 "c.y"
-                                                                                                                        { (yyval.node) = createAddOperator("SUBSTRACT");}
+                                                                                                                        { (yyval.node) = createAddOperator("SUB");}
 #line 1484 "c.tab.c"
     break;
 
   case 51: /* term: term mulop factor  */
 #line 199 "c.y"
-                                                                                                                { (yyval.node) = createMultiplier((yyvsp[-2].node), (yyvsp[-1].node), (yyvsp[0].node));}
+                                                                                                                { (yyval.node) = (yyvsp[0].node); addLinkToList((yyval.node), (yyvsp[-1].node)); addLinkToList((yyval.node), (yyvsp[-2].node));}
 #line 1490 "c.tab.c"
     break;
 
   case 52: /* term: factor  */
 #line 200 "c.y"
-                                                                                                                        { (yyval.node) = createMultiplier((yyvsp[0].node), NULL, NULL);}
+                                                                                                                        { (yyval.node) = createListNode("Term", (yyvsp[0].node));}
 #line 1496 "c.tab.c"
     break;
 
   case 53: /* mulop: MULTIPLY  */
 #line 204 "c.y"
-                                                                                                                        { (yyval.node) = createMulOperator("MULTIPLY");}
+                                                                                                                        { (yyval.node) = createMulOperator("MULT");}
 #line 1502 "c.tab.c"
     break;
 
   case 54: /* mulop: DIVIDE  */
 #line 205 "c.y"
-                                                                                                                        { (yyval.node) = createMulOperator("DIVIDE");}
+                                                                                                                        { (yyval.node) = createMulOperator("DIV");}
 #line 1508 "c.tab.c"
     break;
 

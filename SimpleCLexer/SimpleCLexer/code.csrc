@@ -2,15 +2,14 @@ void main(void)
 {
 	int x;
 	int y;
-	x = input();
-	y = input();
-	output(gcdtest(x,y));
+	x = a - y * b;
 }
 
-int gcdtest ( int u, int v )
+int gcdtest ( int a, int b )
 {
-	if ( v == 0 )
-		return u ;
+	int x;
+	if ( a == b )
+		return a;
 	else
-		return gcdtest ( v, u-u/v*v );
+		return x * b;
 }

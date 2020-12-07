@@ -6,3 +6,12 @@ int abcd(void){
 	if( jhhjsd){}
 
 }
+
+
+
+int gcdtest ( int u, int v )
+{
+	int a;
+	if ( abcdef )
+		return a;
+}
